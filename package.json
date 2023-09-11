@@ -1,0 +1,23 @@
+{
+  "name": "photolabs-starter",
+  "version": "1.0.0",
+  "description": "The PhotoLabs project for the Web Development React course programming.",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lighthouse-labs/photolabs-starter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lighthouse-labs/photolabs-starter/issues"
+  },
+  "homepage": "https://github.com/lighthouse-labs/photolabs-starter#readme",
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  }
+}
