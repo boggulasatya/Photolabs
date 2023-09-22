@@ -77,37 +77,3 @@ function useApplicationData() {
 
 export default useApplicationData;
 
-// function useApplicationData() {
-//   const [isFavorited, setIsFavourited] = useState([]);
-//   //use useState to store the the photos and topics
-//   const [photos, setPhotoData] = useState(mockphotos);
-//   const [topicData, setTopicData] = useState(mocktopics);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [selectedPhoto, setSelectedPhoto] = useState(null);//track which photo item the user clicks on
-//   const toggleFavourite = (photo) => {
-//     if (isFavorited.includes(photo)) {
-//       let newFavourites = [...isFavorited].filter((favouritePhoto) => photo !== favouritePhoto);
-//       setIsFavourited(newFavourites);
-//     } else {
-//       setIsFavourited((prev) => [...prev, photo]);
-//     }
-//   };
-//   const openModal = (photo) => {
-//     setSelectedPhoto(photo);
-//     setIsModalOpen(true);
-//   };
-
-//   const closeModal = () => {
-//     setIsModalOpen(false);
-//   };
-//   return {
-//     isModalOpen,
-//     selectedPhoto,
-//     isFavorited,
-//     toggleFavourite,
-//     openModal,
-//     closeModal,
-//     photos,
-//   };
-// }
-//   export default useApplicationData;
