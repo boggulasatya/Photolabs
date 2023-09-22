@@ -27,8 +27,8 @@ const PhotoDetailsModal = ({ photo, onClose, toggleFavourite }) => {
           <p className="photo-list__user-info photo-list__user-location">{photo.location.city}, {photo.location.country}</p>
         </div>
       </div>
-      <h2 className="similar-photos"></h2>
-        <h3 className="photo-details-modal__header">Similar Photos</h3>
+      <div className="photo-details-modal__header">Similar Photos</div>
+      <p className="photo-details-modal__images"></p>
         {/* Render similar photos using the PhotoList component */}
         <PhotoList photos={similarPhotos} />
       </div>
