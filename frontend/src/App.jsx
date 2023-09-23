@@ -5,6 +5,7 @@ import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import useApplicationData from "./hooks/useApplicationData";
 
 const App = () => {
+
   const {
     isModalOpen,
     selectedPhoto,
@@ -12,13 +13,14 @@ const App = () => {
     toggleFavourite,
     openModal,
     closeModal,
-    photos,
+    photoData,
+    topicData,
   } = useApplicationData();
 
   return (
 
     <div className="App">
-      <HomeRoute photos={photos} openModal={openModal} isFavorited={isFavorited} toggleFavourite={toggleFavourite} />
+       <HomeRoute photoData={photoData} topicData={topicData}  openModal={openModal} isFavorited={isFavorited} toggleFavourite={toggleFavourite} />
       {isModalOpen && (
         <PhotoDetailsModal
           photo={selectedPhoto}
@@ -26,6 +28,7 @@ const App = () => {
           onClose={() => {
             closeModal();
           }}
+          similarPhotos={selectedPhoto.similar_photos} 
         />
       )}
     </div>

@@ -1,17 +1,18 @@
 import React from "react";
 import "../styles/PhotoList.scss";
 import PhotoListItem from './PhotoListItem'; 
+import useApplicationData from 'hooks/useApplicationData';
 
-
-const PhotoList = ({ photos, toggleFavourite, openModal, PhotoDetailsModal, setDisplayModal, setPhotoData, isFavorited }) => {
-console.log('photos:', photos);
+const PhotoList = ({  photos, toggleFavourite, openModal, PhotoDetailsModal, setDisplayModal, setPhotoData, setTopicData, isFavorited }) => {
+  const { photoData } = useApplicationData();
+// console.log('photos:', photos);
   return (
     
     <ul className="photo-list">
-      {photos && photos.map((photo) => (
+      {photos.map((photo) => (
         <PhotoListItem
           key={photo.id}
-          photo={photo}
+          // photoData={photoData}
           toggleFavourite={toggleFavourite}
           imageSource={photo.urls.regular}
           profile={photo.user.profile}
@@ -21,6 +22,7 @@ console.log('photos:', photos);
           PhotoDetailsModal={PhotoDetailsModal}
           setDisplayModal={setDisplayModal}
           setPhotoData={setPhotoData}
+          setTopicData={setTopicData}
           isFavorited={isFavorited}
         />
       ))}

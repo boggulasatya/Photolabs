@@ -8,7 +8,7 @@ const PhotoListItem = ({ photo, toggleFavourite, imageSource, profile, username,
   return (
     <li className="photo-list__item">
       <PhotoFavButton
-      photo={photo}
+      // photoData={photoData}
         toggleFavourite={toggleFavourite}
       />
       <img
