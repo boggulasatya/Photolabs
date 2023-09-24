@@ -1,6 +1,4 @@
 import { useReducer, useEffect } from "react";
-// import mockphotos from '../mocks/photos';
-// import mocktopics from '../mocks/topics';
 
 //initial state
 const initialState = {
@@ -14,10 +12,10 @@ const initialState = {
 // Define your reducer function
 function appReducer(state, action) {
   
-  switch (action.type) {
+  switch(action.type) {
     case "TOGGLE_FAVORITE":
       // Check if the photo is already favorited
-      if (state.isFavorited.includes(action.payload)) {
+      if(state.isFavorited.includes(action.payload)) {
         return {
           ...state,
           isFavorited: state.isFavorited.filter((photo) => photo !== action.payload),
@@ -40,12 +38,12 @@ function appReducer(state, action) {
         isModalOpen: false,
         selectedPhoto: null,
       };
-      case "SET_PHOTO_DATA": // Handle the SET_PHOTO_DATA action
+      case "SET_PHOTO_DATA": 
       return {
         ...state,
         photoData: action.payload,
       };
-      case "SET_TOPIC_DATA": // Handle the SET_TOPIC_DATA action
+      case "SET_TOPIC_DATA": 
       return {
         ...state,
         topicData: action.payload,
@@ -89,26 +87,17 @@ useEffect(() => {
     });
 }, []);
 
-function fetchPhotosByTopic(topicId) {
-  const apiUrl = `http://localhost:8001/api/topics/photos/${topicId}`;
-
-  return fetch(apiUrl)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
+const fetchPhotosByTopic = (topicId) => {
+  // Fetch photos for the selected topic
+  fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+    .then((response) => response.json())
     .then((data) => {
-      // Handle the fetched photos data here, e.g., store it in state or return it
-      return data;
+      dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
     })
     .catch((error) => {
-      console.error("Error fetching photos by topic:", error);
-      throw error; // Rethrow the error for further handling in the component
+      console.error('Error fetching photos:', error);
     });
-}
-
+};
 
   // Destructuring  state
   const { photoData, topicData, isModalOpen, selectedPhoto, isFavorited } = state;
