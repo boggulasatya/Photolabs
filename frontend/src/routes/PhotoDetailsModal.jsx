@@ -12,26 +12,26 @@ const PhotoDetailsModal = ({ photo, onClose, toggleFavourite }) => {
       <button className="photo-details-modal__close-button" onClick={onClose}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
-       <div>
-      <PhotoFavButton
-          // photo={photo}
-          toggleFavourite={toggleFavourite}/>
-      </div> 
-        <div className="photo-details-modal__image" />
-        <img src={photo.urls.full} className="photo-details-modal__image" alt="SelectedPhoto" />
-       <div className="photo-details-modal__top-bar"/>
-      <div className="photo-details-modal__photographer-details">
-        <img src={photo.user.profile} className="photo-list__user-profile" />
-        <div className="photo-list__user-info">
-          <p className="photo-list__user-info">{photo.user.name}</p>
-          <p className="photo-list__user-info photo-list__user-location">{photo.location.city}, {photo.location.country}</p>
+      <div className="photo-details-modal__images">
+        <div>
+          <PhotoFavButton
+            toggleFavourite={toggleFavourite} />
         </div>
-      </div>
-      <div className="photo-details-modal__header">Similar Photos</div>
+        {/* <div className="photo-details-modal__image" /> */}
+        <img src={photo.urls.full} className="photo-details-modal__image" alt="SelectedPhoto" />
+        <div className="photo-details-modal__top-bar" />
+        <div className="photo-details-modal__photographer-details">
+          <img src={photo.user.profile} className="photo-list__user-profile" />
+          <section className="photo-list__user-info">
+            <div className="photo-list__user-info">{photo.user.name}</div>
+            <div className="photo-list__user-info photo-list__user-location">{photo.location.city}, {photo.location.country}</div>
+          </section>
+        </div>
+        <div className="photo-details-modal__header">Similar Photos</div>
         {/* Render similar photos using the PhotoList component */}
-        <PhotoList photos={similarPhotos} toggleFavourite={toggleFavourite}  />
+        <PhotoList photos={similarPhotos} toggleFavourite={toggleFavourite} />
       </div>
-  
+    </div>
   )
 };
 
