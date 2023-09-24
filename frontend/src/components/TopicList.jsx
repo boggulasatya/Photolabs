@@ -1,33 +1,40 @@
 import React from "react";
-import topics from '../mocks/topics';
 import "../styles/TopicList.scss";
 import TopicListItem from "./TopicListItem";
-const sampleDataForTopicList = [
-  {
-    id: "1",
-    slug: "topic-1",
-    title: "Nature",
-  },
-  {
-    id: "2",
-    slug: "topic-2",
-    title: "Travel",
-  },
-  {
-    id: "3",
-    slug: "topic-3",
-    title: "People",
-  },
-];
+import  { useEffect, useState } from 'react';
 
-const TopicList = () => {
+const TopicList = ({ onTopicClick }) => {
+  const [topics, setTopics] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPhotos, setCurrentPhotos] = useState([]);
+  const [currentTopicId, setCurrentTopicId] = useState(null);
+
+  useEffect(() => {
+    // Fetch the list of topics when the component is mounted
+    fetch('http://localhost:8001/api/topics')
+      .then((response) => response.json())
+      .then((data) => {
+        setTopics(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching topics:', error);
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <div className="top-nav-bar__topic-list">
-      {topics.map((topic) => (
-        <TopicListItem key={topic.id} topic={topic} />
-      ))}
-      </div>
-      );
-    };
+      {isLoading ? (
+        <p>Loading topics...</p>
+      ) : (
+        topics.map((topic) => (
+            <TopicListItem key={topic.id} topic={topic} onTopicClick={onTopicClick}
+            />
+        ))
+      )}
+    </div>
+  );
+};
 
 export default TopicList;
