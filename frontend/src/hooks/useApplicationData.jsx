@@ -11,19 +11,23 @@ const initialState = {
 
 // Define your reducer function
 function appReducer(state, action) {
-  
-  switch(action.type) {
-    case "TOGGLE_FAVORITE":
+
+  switch (action.type) {
+    case "TOGGLE_FAVOURITE":
+      const photoId = action.payload;
       // Check if the photo is already favorited
-      if(state.isFavorited.includes(action.payload)) {
+      if (state.isFavorited.includes(photoId)) {
+        console.log("Removing from favorites:", photoId);
+
         return {
           ...state,
-          isFavorited: state.isFavorited.filter((photo) => photo !== action.payload),
+          isFavorited: state.isFavorited.filter((favouritePhotoId) => favouritePhotoId !== photoId),
         };
       } else {
+        console.log("Adding to favorites:", photoId);
         return {
           ...state,
-          isFavorited: [...state.isFavorited, action.payload],
+          isFavorited: [...state.isFavorited, photoId],
         };
       }
     case "OPEN_MODAL":
@@ -38,12 +42,12 @@ function appReducer(state, action) {
         isModalOpen: false,
         selectedPhoto: null,
       };
-      case "SET_PHOTO_DATA": 
+    case "SET_PHOTO_DATA":
       return {
         ...state,
         photoData: action.payload,
       };
-      case "SET_TOPIC_DATA": 
+    case "SET_TOPIC_DATA":
       return {
         ...state,
         topicData: action.payload,
@@ -52,7 +56,7 @@ function appReducer(state, action) {
     default:
       return state;
   }
-} 
+}
 
 function useApplicationData() {
   const [state, dispatch] = useReducer(appReducer, initialState);
@@ -60,51 +64,51 @@ function useApplicationData() {
   const ACTIONS = {
     SET_PHOTO_DATA: "SET_PHOTO_DATA",
     SET_TOPIC_DATA: "SET_TOPIC_DATA",
+    TOGGLE_FAVOURITE: "TOGGLE_FAVOURITE",
   };
 
-// Fetch photos and topics data when the custom hook is initialized
-const apiUrl = "http://localhost:8001/api";
-useEffect(() => {
-  fetch(`${apiUrl}/photos`)
-    .then((response) => response.json())
-    .then((data) => {
-      dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
-    })
-    .catch((error) => {
-      console.error("Error fetching photos:", error);
-    });
-}, []);
+  // Fetch photos and topics when the custom hook is initialized
+  const apiUrl = "http://localhost:8001/api";
+  useEffect(() => {
+    fetch(`${apiUrl}/photos`)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error("Error fetching photos:", error);
+      });
+  }, []);
 
+  const fetchTopics = () => {
+    fetch(`${apiUrl}/topics`)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error("Error fetching topics:", error);
+      });
+  };
 
-useEffect(() => {
-  fetch(`${apiUrl}/topics`)
-    .then((response) => response.json())
-    .then((data) => {
-      dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data });
-    })
-    .catch((error) => {
-      console.error("Error fetching topics:", error);
-    });
-}, []);
-
-const fetchPhotosByTopic = (topicId) => {
-  // Fetch photos for the selected topic
-  fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
-    .then((response) => response.json())
-    .then((data) => {
-      dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
-    })
-    .catch((error) => {
-      console.error('Error fetching photos:', error);
-    });
-};
+  const fetchPhotosByTopic = (topicId) => {
+    // Fetch photos for the selected topic
+    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
+      })
+      .catch((error) => {
+        console.error('Error fetching photos:', error);
+      });
+  };
 
   // Destructuring  state
   const { photoData, topicData, isModalOpen, selectedPhoto, isFavorited } = state;
 
   // action creators
-  const toggleFavourite = (photo) => {
-    dispatch({ type: "TOGGLE_FAVORITE", payload: photo });
+  const toggleFavourite = (photoId) => {
+    dispatch({ type: "TOGGLE_FAVOURITE", payload: photoId });
   };
 
   const openModal = (photo) => {
@@ -125,6 +129,7 @@ const fetchPhotosByTopic = (topicId) => {
     openModal,
     closeModal,
     fetchPhotosByTopic,
+    fetchTopics,
   };
 }
 export default useApplicationData;
