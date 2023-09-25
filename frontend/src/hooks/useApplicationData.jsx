@@ -17,14 +17,12 @@ function appReducer(state, action) {
       const photoId = action.payload;
       // Check if the photo is already favorited
       if (state.isFavorited.includes(photoId)) {
-        console.log("Removing from favorites:", photoId);
-
         return {
           ...state,
           isFavorited: state.isFavorited.filter((favouritePhotoId) => favouritePhotoId !== photoId),
         };
       } else {
-        console.log("Adding to favorites:", photoId);
+
         return {
           ...state,
           isFavorited: [...state.isFavorited, photoId],
