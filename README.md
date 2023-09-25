@@ -9,11 +9,6 @@ PhotoLabs is a React-based single-page application  that allows users to view ph
 
 !["Home-page"](https://raw.githubusercontent.com/boggulasatya/Photolabs/255731de8c86a1c0c85af6338e8a71fcd6cce461/docs/Home-page.png)
 
-## Functional Requirements
- * The server and persistence layer given as follows:
- * The data layer consists of a PostgreSQL database.
- * The API server consists of a Node Express.js server application.
- * The client will communicate with the API over HTTP using the JSON format.
 
 ## Setup
 
