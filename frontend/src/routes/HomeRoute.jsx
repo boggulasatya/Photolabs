@@ -7,21 +7,7 @@ import PhotoList from 'components/PhotoList';
 import useApplicationData from '../hooks/useApplicationData';
 
 const HomeRoute = (props) => {
-  const { photoData, topicData, fetchPhotosByTopic } = useApplicationData();
-  const defaultState = [];
-  const [isFavorited, setIsFavourited] = useState(defaultState);
-  const toggleFavourite = (photo) => {
-
-    if (isFavorited.includes(photo)) {
-      let newFavourites = [...isFavorited].filter((favouritePhoto) => photo !== favouritePhoto)
-      setIsFavourited(newFavourites);
-
-    } else {
-      setIsFavourited((prev) =>
-        [...prev, photo]);
-
-    }
-  };
+  const { photoData, topicData, fetchPhotosByTopic, toggleFavourite, isFavorited } = useApplicationData();
 
   return (
     <div className="home-route">
