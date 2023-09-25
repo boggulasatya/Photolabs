@@ -4,11 +4,11 @@ import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 
 
-function PhotoFavButton({ photo, toggleFavourite }) {
+function PhotoFavButton({ photoId, toggleFavourite }) {
   const [isLiked, setIsLiked] = useState(false);
   function handleClick() {
     setIsLiked(!isLiked);
-    toggleFavourite(photo);
+    toggleFavourite(photoId);
   }
   return (
     

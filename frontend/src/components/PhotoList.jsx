@@ -2,7 +2,8 @@ import React from "react";
 import "../styles/PhotoList.scss";
 import PhotoListItem from './PhotoListItem'; 
 
-const PhotoList = ({  photos, toggleFavourite, openModal, PhotoDetailsModal, setDisplayModal, setPhotoData, setTopicData, isFavorited, selectedTopicId }) => {
+const PhotoList = ({  photos, toggleFavourite, isFavorited,  openModal }) => {
+  
   return (
     
     <ul className="photo-list">
@@ -15,10 +16,6 @@ const PhotoList = ({  photos, toggleFavourite, openModal, PhotoDetailsModal, set
           username={photo.user.name}
           location={photo.location}
           openModal={() => openModal(photo)}
-          PhotoDetailsModal={PhotoDetailsModal}
-          setDisplayModal={setDisplayModal}
-          setPhotoData={setPhotoData}
-          setTopicData={setTopicData}
           isFavorited={isFavorited}
         />
       ))}
