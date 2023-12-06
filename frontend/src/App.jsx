@@ -3,6 +3,7 @@ import './App.scss';
 import HomeRoute from 'routes/HomeRoute';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import useApplicationData from "./hooks/useApplicationData";
+import SearchBar from 'components/SearchBar';
 
 const App = () => {
 
@@ -15,11 +16,14 @@ const App = () => {
     closeModal,
     photoData,
     topicData,
+    searchPhotos,
   } = useApplicationData();
 
   return (
 
     <div className="App">
+        <SearchBar searchPhotos={searchPhotos} />
+       {/* <SearchBar searchPhotos={searchPhotos} /> */}
        <HomeRoute photoData={photoData} topicData={topicData}  openModal={openModal} isFavorited={isFavorited} toggleFavourite={toggleFavourite} />
       {isModalOpen && (
         <PhotoDetailsModal
@@ -31,6 +35,7 @@ const App = () => {
           similarPhotos={selectedPhoto.similar_photos} 
         />
       )}
+      
     </div>
 
   );

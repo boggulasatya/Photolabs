@@ -12,6 +12,36 @@ module.exports = db => {
       response.json(topics);
     });
   });
+  router.get('/photos', async (req, res) => {
+    const { field, query } = req.query;
+  
+    let sqlQuery = `SELECT * FROM photos`;
+  
+    if (field && query) {
+      switch (field.toLowerCase()) {
+        case 'username':
+          sqlQuery += ` WHERE username ILIKE '%${query}%'`;
+          break;
+        case 'location':
+          sqlQuery += ` WHERE city ILIKE '%${query}%' OR country ILIKE '%${query}%'`;
+          break;
+        // Handle other fields similarly
+        default:
+          break;
+      }
+    }
+  
+    try {
+      const result = await db.query(sqlQuery);
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+      res.status(500).json({ error: 'An error occurred while fetching photos' });
+    }
+  });
+  
+  
+  
   
   router.get("/topics/photos/:id", (request, response) => {
     const protocol = request.protocol;
@@ -76,3 +106,5 @@ module.exports = db => {
 
   return router;
 };
+
+

@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from "react";
-
+import axios from "axios";
 //initial state
 const initialState = {
   photoData: [],
@@ -68,22 +68,20 @@ function useApplicationData() {
   // Fetch photos and topics when the custom hook is initialized
   const apiUrl = "http://localhost:8001/api";
   useEffect(() => {
-    fetch(`${apiUrl}/photos`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
-      })
+    axios.get(`${apiUrl}/photos`)
+    .then((response) => {
+      dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: response.data });
+    })
       .catch((error) => {
         console.error("Error fetching photos:", error);
       });
   }, []);
 
   const fetchTopics = () => {
-    fetch(`${apiUrl}/topics`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data });
-      })
+    axios.get(`${apiUrl}/topics`)
+    .then((response) => {
+      dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: response.data });
+    })
       .catch((error) => {
         console.error("Error fetching topics:", error);
       });
@@ -91,13 +89,25 @@ function useApplicationData() {
 
   const fetchPhotosByTopic = (topicId) => {
     // Fetch photos for the selected topic
-    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
-      })
+    axios.get(`${apiUrl}/topics/photos/${topicId}`)
+    .then((response) => {
+      dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: response.data });
+    })
       .catch((error) => {
         console.error('Error fetching photos:', error);
+      });
+  };
+
+  const searchPhotos = (field, query) => {
+    axios
+      .get(`${apiUrl}/photos`, {
+        params: { field, query },
+      })
+      .then((response) => {
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: response.data });
+      })
+      .catch((error) => {
+        console.error("Error searching photos:", error);
       });
   };
 
@@ -128,6 +138,7 @@ function useApplicationData() {
     closeModal,
     fetchPhotosByTopic,
     fetchTopics,
+    searchPhotos,
   };
 }
 export default useApplicationData;
